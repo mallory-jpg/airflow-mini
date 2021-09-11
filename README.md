@@ -3,13 +3,16 @@
 
 ### Source Data Schema
 
-|Column          |   Type
-|________________________________________________________________________
-|date time       |   STRING                                             |
-|open            |   DECIMAL                                            |
-|high            |   DECIMAL (highest price within the time |interval)  |
-|low             |   DECIMAL (lowest price within the time |interval)   |
-|close           |   DECIMAL (the last price of the time interval)      |
-|adj close       |   DECIMAL                                            |
-|volume          |   DECIMAL                                            |
-|_______________ | _____________________________________________________|
+|Column    | Type   |
+|----------|--------|
+|date time |STRING  |
+|open      |DECIMAL |
+|high      |DECIMAL | 
+|low       |DECIMAL | 
+|close     |DECIMAL |  
+|adj close |DECIMAL |
+|volume    |DECIMAL |
+
+* *high* : highest price within the time interval
+* *low* : lowest price within the time interval
+* *close* : the last price of the time interval
