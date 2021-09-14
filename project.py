@@ -1,5 +1,9 @@
 import pandas as pd 
 import yfinance as yf
+import pandas as pd
+import os
+import datetime
+from datetime import datetime, date
 
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -33,21 +37,41 @@ def download_market_data(stock=str):
                            end=end_date, interval='1m')
     stock_df.to_csv(f"{stock}_data.csv", header=False)
 
-def query(file):
-    pass
+def max_difference():
+    """Get maximum difference of a stock price within a given trading day and on what date it occurs."""
+    # get current working directory
+    cwd = os.getcwd()
+    for file in cwd:
+        # read each csv into a pandas dataframe
+        df = pd.read_csv(file)
+        # get name of stock from directory name
+        stock = cwd.splittext('_')[0]
+        idx = (df['high'] - df['low']).abs().idxmax()
+        max_diff = df.iloc[idx]['high'] - df.iloc[idx]['low']
+        datetm = max_diff['date time'].apply(
+            lambda x: datetime.strptime(x, '%d%b%Y:%H:%M:%S.%f'))
+        date = datetm.date()
+        
+        print(f"The largest difference in {stock} price is: {max_diff}\n")
+        print(f"On {date}")
 
 
 # I use oh-my-zsh instead of Bash
-now_template = """
-    var=$(date +"%FORMAT_STRING")
-    now=$(date +"%Y_%m_%d")
-    mkdir -p /tmp/data/$now
+# now_template = """
+#     var=$(date +"%FORMAT_STRING")
+#     now=$(date +"%Y_%m_%d")
+#     mkdir -p /tmp/data/$now
+# """
+
+bash_template = """
+    echo "creating data directory for {{ ds }}"
+    mkdir - p /tmp/data/{{ ds }}
 """
 
 # create tmp directory using now_template
 t0 = BashOperator(
     task_id='init_temp_directory',
-    bash_command=now_template, # change it
+    bash_command=bash_template, # change it
     dag=dag
 )
 
@@ -80,13 +104,12 @@ t4 = BashOperator(
     bash_command='mv -f TSLA_data.csv /tmp/data/$now',
     dag=dag
 )
-# add to hadoop: hdfs dfs -put /home/username/file.csv /user/data/file.csv
+# hadoop: hdfs dfs -put /home/username/file.csv /user/data/file.csv
 
 # run query?
 t5 = PythonOperator(
     task_id='',
-    python_callable=query,
-    kwargs={},
+    python_callable=max_difference,
     dag=dag
 )
 
