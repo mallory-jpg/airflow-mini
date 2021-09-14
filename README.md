@@ -7,6 +7,11 @@ If you use `pip` installer:
 * Yahoo Finance's Python Library: `pip install yfinance`
 * Pandas: `pip install pandas`
 
+This project also utilizes:
+* os
+* datetime (date)
+
+
 ### Goals
 * Orchestrate a pipeline with Airflow
 * Execute in parallel on different datasets
@@ -29,7 +34,8 @@ If you use `pip` installer:
 * *close* : the last price of the time interval
 
 ## Running the code
-On the command line:
-1. `python3 project.py` runs the script
-2. `airflow scheduler` schedules the DAG processes in Airflow
-3. ` > execution.log` captures the command line execution log
+1. Ensure `project.py` in `/airflow/dags` directory
+2. Run `docker run --platform linux/amd64 -d -p 8081:8081 -v <location of /airflow/dags folder> puckel/docker-airflow webserver` on command line, which runs the DAGs in the folder. 
+
+*Note*: I've included the `--platform` flag because my Macbook has the M1 processing chip
+*Note*: I've run the entire folder, as this DAG was the only one present at the time of this project
