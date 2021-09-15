@@ -1,27 +1,387 @@
-[2021-09-14 02:12:53,098] {{scheduler_job.py:1344}} INFO - Starting the scheduler
-[2021-09-14 02:12:53,100] {{scheduler_job.py:1352}} INFO - Running execute loop for -1 seconds
-[2021-09-14 02:12:53,101] {{scheduler_job.py:1353}} INFO - Processing each file at most -1 times
-[2021-09-14 02:12:53,102] {{scheduler_job.py:1356}} INFO - Searching for files in /usr/local/airflow/dags
-[2021-09-14 02:12:53,103] {{scheduler_job.py:1358}} INFO - There are 0 files in /usr/local/airflow/dags
-[2021-09-14 02:12:53,104] {{scheduler_job.py:1409}} INFO - Resetting orphaned tasks for active dag runs
-[2021-09-14 02:12:53,209] {{dag_processing.py:556}} INFO - Launched DagFileProcessorManager with pid: 46
-[2021-09-14 02:12:53,238] {{settings.py:54}} INFO - Configured default timezone <Timezone [UTC]>
-[2021-09-14 02:12:53,274] {{dag_processing.py:758}} WARNING - Because we cannot use more than 1 thread (max_threads = 2) when using sqlite. So we set parallelism to 1.
-[2021-09-14 02:12:53,863] {{__init__.py:51}} INFO - Using executor SequentialExecutor
-[2021-09-14 02:12:53,866] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
-Running the Gunicorn Server with:
-Workers: 4 sync
-Host: 0.0.0.0:8080
-Timeout: 120
-Logfiles: - -
-=================================================================            
-[2021-09-14 02:13:06,747] {{__init__.py:[51}} INFO - Using executor SequentialExecutor
-2021-09-14 02:13:06,746] {{__init__.py:51}} INFO - Using executor SequentialExecutor
-[2021-09-14 02:13:06,759] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
-[2021-09-14 02:13:06,750] {{__init__.py:51}} INFO - Using executor SequentialExecutor
-[2021-09-14 02:13:06,760[] {{dagbag.py:2021-09-14 02:13:06,762] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
-403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
-[2021-09-14 02:13:06,779] {{__init__.py:51}} INFO - Using executor SequentialExecutor
-[2021-09-14 02:13:06,783] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+DB: sqlite:////usr/local/airflow/airflow.db
+
+[2021-09-14 02:12:16,686] {{db.py:368}} INFO - Creating tables
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+
+INFO  [alembic.runtime.migration] Running upgrade  -> e3a246e0dc1, current schema
+
+INFO  [alembic.runtime.migration] Running upgrade e3a246e0dc1 -> 1507a7289a2f, create is_encrypted
+
+/usr/local/lib/python3.7/site-packages/alembic/ddl/sqlite.py:39: UserWarning: Skipping unsupported ALTER for creation of implicit constraint
+
+  "Skipping unsupported ALTER for "
+
+INFO  [alembic.runtime.migration] Running upgrade 1507a7289a2f -> 13eb55f81627, maintain history for compatibility with earlier migrations
+
+INFO  [alembic.runtime.migration] Running upgrade 13eb55f81627 -> 338e90f54d61, More logging into task_instance
+
+INFO  [alembic.runtime.migration] Running upgrade 338e90f54d61 -> 52d714495f0, job_id indices
+
+INFO  [alembic.runtime.migration] Running upgrade 52d714495f0 -> 502898887f84, Adding extra to Log
+
+INFO  [alembic.runtime.migration] Running upgrade 502898887f84 -> 1b38cef5b76e, add dagrun
+
+INFO  [alembic.runtime.migration] Running upgrade 1b38cef5b76e -> 2e541a1dcfed, task_duration
+
+INFO  [alembic.runtime.migration] Running upgrade 2e541a1dcfed -> 40e67319e3a9, dagrun_config
+
+INFO  [alembic.runtime.migration] Running upgrade 40e67319e3a9 -> 561833c1c74b, add password column to user
+
+INFO  [alembic.runtime.migration] Running upgrade 561833c1c74b -> 4446e08588, dagrun start end
+
+INFO  [alembic.runtime.migration] Running upgrade 4446e08588 -> bbc73705a13e, Add notification_sent column to sla_miss
+
+INFO  [alembic.runtime.migration] Running upgrade bbc73705a13e -> bba5a7cfc896, Add a column to track the encryption state of the 'Extra' field in connection
+
+INFO  [alembic.runtime.migration] Running upgrade bba5a7cfc896 -> 1968acfc09e3, add is_encrypted column to variable table
+
+INFO  [alembic.runtime.migration] Running upgrade 1968acfc09e3 -> 2e82aab8ef20, rename user table
+
+INFO  [alembic.runtime.migration] Running upgrade 2e82aab8ef20 -> 211e584da130, add TI state index
+
+INFO  [alembic.runtime.migration] Running upgrade 211e584da130 -> 64de9cddf6c9, add task fails journal table
+
+INFO  [alembic.runtime.migration] Running upgrade 64de9cddf6c9 -> f2ca10b85618, add dag_stats table
+
+INFO  [alembic.runtime.migration] Running upgrade f2ca10b85618 -> 4addfa1236f1, Add fractional seconds to mysql tables
+
+INFO  [alembic.runtime.migration] Running upgrade 4addfa1236f1 -> 8504051e801b, xcom dag task indices
+
+INFO  [alembic.runtime.migration] Running upgrade 8504051e801b -> 5e7d17757c7a, add pid field to TaskInstance
+
+INFO  [alembic.runtime.migration] Running upgrade 5e7d17757c7a -> 127d2bf2dfa7, Add dag_id/state index on dag_run table
+
+INFO  [alembic.runtime.migration] Running upgrade 127d2bf2dfa7 -> cc1e65623dc7, add max tries column to task instance
+
+INFO  [alembic.runtime.migration] Running upgrade cc1e65623dc7 -> bdaa763e6c56, Make xcom value column a large binary
+
+INFO  [alembic.runtime.migration] Running upgrade bdaa763e6c56 -> 947454bf1dff, add ti job_id index
+
+INFO  [alembic.runtime.migration] Running upgrade 947454bf1dff -> d2ae31099d61, Increase text size for MySQL (not relevant for other DBs' text types)
+
+INFO  [alembic.runtime.migration] Running upgrade d2ae31099d61 -> 0e2a74e0fc9f, Add time zone awareness
+
+INFO  [alembic.runtime.migration] Running upgrade d2ae31099d61 -> 33ae817a1ff4, kubernetes_resource_checkpointing
+
+INFO  [alembic.runtime.migration] Running upgrade 33ae817a1ff4 -> 27c6a30d7c24, kubernetes_resource_checkpointing
+
+INFO  [alembic.runtime.migration] Running upgrade 27c6a30d7c24 -> 86770d1215c0, add kubernetes scheduler uniqueness
+
+INFO  [alembic.runtime.migration] Running upgrade 86770d1215c0, 0e2a74e0fc9f -> 05f30312d566, merge heads
+
+INFO  [alembic.runtime.migration] Running upgrade 05f30312d566 -> f23433877c24, fix mysql not null constraint
+
+INFO  [alembic.runtime.migration] Running upgrade f23433877c24 -> 856955da8476, fix sqlite foreign key
+
+INFO  [alembic.runtime.migration] Running upgrade 856955da8476 -> 9635ae0956e7, index-faskfail
+
+INFO  [alembic.runtime.migration] Running upgrade 9635ae0956e7 -> dd25f486b8ea, add idx_log_dag
+
+INFO  [alembic.runtime.migration] Running upgrade dd25f486b8ea -> bf00311e1990, add index to taskinstance
+
+INFO  [alembic.runtime.migration] Running upgrade 9635ae0956e7 -> 0a2a5b66e19d, add task_reschedule table
+
+INFO  [alembic.runtime.migration] Running upgrade 0a2a5b66e19d, bf00311e1990 -> 03bc53e68815, merge_heads_2
+
+INFO  [alembic.runtime.migration] Running upgrade 03bc53e68815 -> 41f5f12752f8, add superuser field
+
+INFO  [alembic.runtime.migration] Running upgrade 41f5f12752f8 -> c8ffec048a3b, add fields to dag
+
+INFO  [alembic.runtime.migration] Running upgrade c8ffec048a3b -> dd4ecb8fbee3, Add schedule interval to dag
+
+INFO  [alembic.runtime.migration] Running upgrade dd4ecb8fbee3 -> 939bb1e647c8, task reschedule fk on cascade delete
+
+INFO  [alembic.runtime.migration] Running upgrade 939bb1e647c8 -> 6e96a59344a4, Make TaskInstance.pool not nullable
+
+INFO  [alembic.runtime.migration] Running upgrade 6e96a59344a4 -> d38e04c12aa2, add serialized_dag table
+
+Revision ID: d38e04c12aa2
+
+Revises: 6e96a59344a4
+
+Create Date: 2019-08-01 14:39:35.616417
+
+INFO  [alembic.runtime.migration] Running upgrade d38e04c12aa2 -> b3b105409875, add root_dag_id to DAG
+
+Revision ID: b3b105409875
+
+Revises: d38e04c12aa2
+
+Create Date: 2019-09-28 23:20:01.744775
+
+INFO  [alembic.runtime.migration] Running upgrade 6e96a59344a4 -> 74effc47d867, change datetime to datetime2(6) on MSSQL tables
+
+INFO  [alembic.runtime.migration] Running upgrade 939bb1e647c8 -> 004c1210f153, increase queue name size limit
+
+INFO  [alembic.runtime.migration] Running upgrade c8ffec048a3b -> a56c9515abdc, Remove dag_stat table
+
+INFO  [alembic.runtime.migration] Running upgrade a56c9515abdc, 004c1210f153, 74effc47d867, b3b105409875 -> 08364691d074, Merge the four heads back together
+
+INFO  [alembic.runtime.migration] Running upgrade 08364691d074 -> fe461863935f, increase_length_for_connection_password
+
+INFO  [alembic.runtime.migration] Running upgrade fe461863935f -> 7939bcff74ba, Add DagTags table
+
+[2021-09-14 02:12:59 +0000] [48] [INFO] Starting gunicorn 19.10.0
+
+[2021-09-14 02:12:59 +0000] [48] [INFO] Listening at: http://0.0.0.0:8080 (48)
+
+[2021-09-14 02:12:59 +0000] [48] [INFO] Using worker: sync
+
+[2021-09-14 02:12:59 +0000] [57] [INFO] Booting worker with pid: 57
+
+[2021-09-14 02:12:59 +0000] [59] [INFO] Booting worker with pid: 59
+
+[2021-09-14 02:12:59 +0000] [61] [INFO] Booting worker with pid: 61
+
+[2021-09-14 02:12:59 +0000] [63] [INFO] Booting worker with pid: 63
+
+[2021-09-14 15:47:29 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:57)
+
+[2021-09-14 15:47:30 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:59)
+
+[2021-09-14 15:47:30 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:61)
+
+[2021-09-14 15:47:30 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:63)
+
+[2021-09-14 15:47:30 +0000] [57] [INFO] Worker exiting (pid: 57)
+
+[2021-09-14 15:47:30 +0000] [61] [INFO] Worker exiting (pid: 61)
+
+[2021-09-14 15:47:30 +0000] [63] [INFO] Worker exiting (pid: 63)
+
+[2021-09-14 15:47:30 +0000] [59] [INFO] Worker exiting (pid: 59)
+
+[2021-09-14 15:47:33 +0000] [83] [INFO] Booting worker with pid: 83
+
+[2021-09-14 15:47:33 +0000] [81] [INFO] Booting worker with pid: 81
+
+[2021-09-14 15:47:33 +0000] [77] [INFO] Booting worker with pid: 77
+
+[2021-09-14 15:47:33 +0000] [79] [INFO] Booting worker with pid: 79
+
+[2021-09-14 16:31:35 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:77)
+
+[2021-09-14 16:31:36 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:79)
+
+[2021-09-14 16:31:36 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:81)
+
+[2021-09-14 16:31:36 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:83)
+
+[2021-09-14 16:31:37 +0000] [77] [INFO] Worker exiting (pid: 77)
+
+[2021-09-14 16:31:37 +0000] [83] [INFO] Worker exiting (pid: 83)
+
+[2021-09-14 16:31:37 +0000] [79] [INFO] Worker exiting (pid: 79)
+
+[2021-09-14 16:31:37 +0000] [81] [INFO] Worker exiting (pid: 81)
+
+[2021-09-14 16:31:38 +0000] [99] [INFO] Booting worker with pid: 99
+
+[2021-09-14 16:31:38 +0000] [101] [INFO] Booting worker with pid: 101
+
+[2021-09-14 16:31:38 +0000] [97] [INFO] Booting worker with pid: 97
+
+[2021-09-14 16:31:38 +0000] [103] [INFO] Booting worker with pid: 103
+
+Done.
+
+  ____________       _____________
+
+ ____    |__( )_________  __/__  /________      __
+
+____  /| |_  /__  ___/_  /_ __  /_  __ \_ | /| / /
+
+___  ___ |  / _  /   _  __/ _  / / /_/ /_ |/ |/ /
+
+ _/_/  |_/_/  /_/    /_/    /_/  \____/____/|__/
+
+[2021-09-14 02:12:52,910] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+  ____________       _____________
+
+ ____    |__( )_________  __/__  /________      __
+
+____  /| |_  /__  ___/_  /_ __  /_  __ \_ | /| / /
+
+___  ___ |  / _  /   _  __/ _  / / /_/ /_ |/ |/ /
+
+ _/_/  |_/_/  /_/    /_/    /_/  \____/____/|__/
+
+[2021-09-14 02:12:53,098] {{scheduler_job.py:1344}} INFO - Starting the scheduler
+
+[2021-09-14 02:12:53,100] {{scheduler_job.py:1352}} INFO - Running execute loop for -1 seconds
+
+[2021-09-14 02:12:53,101] {{scheduler_job.py:1353}} INFO - Processing each file at most -1 times
+
+[2021-09-14 02:12:53,102] {{scheduler_job.py:1356}} INFO - Searching for files in /usr/local/airflow/dags
+
+[2021-09-14 02:12:53,103] {{scheduler_job.py:1358}} INFO - There are 0 files in /usr/local/airflow/dags
+
+[2021-09-14 02:12:53,104] {{scheduler_job.py:1409}} INFO - Resetting orphaned tasks for active dag runs
+
+[2021-09-14 02:12:53,209] {{dag_processing.py:556}} INFO - Launched DagFileProcessorManager with pid: 46
+
+[2021-09-14 02:12:53,238] {{settings.py:54}} INFO - Configured default timezone <Timezone [UTC]>
+
+[2021-09-14 02:12:53,274] {{dag_processing.py:758}} WARNING - Because we cannot use more than 1 thread (max_threads = 2) when using sqlite. So we set parallelism to 1.
+
+[2021-09-14 02:12:53,863] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 02:12:53,866] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+Running the Gunicorn Server with:
+
+Workers: 4 sync
+
+Host: 0.0.0.0:8080
+
+Timeout: 120
+
+Logfiles: - -
+
+=================================================================            
+
+[2021-09-14 02:13:06,747] {{__init__.py:[51}} INFO - Using executor SequentialExecutor
+
+2021-09-14 02:13:06,746] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 02:13:06,759] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 02:13:06,750] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 02:13:06,760[] {{dagbag.py:2021-09-14 02:13:06,762] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 02:13:06,779] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 02:13:06,783] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 15:47:32,331] {{cli.py:852}} ERROR - [0 / 0] some workers seem to have died and gunicorndid not restart them as expected
+
+[[2021-09-14 15:47:40,539] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+2021-09-14 15:47:40,539] {{[2021-09-14 15:47:40,555] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 15:47:40,544] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 15:47:40,560] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 15:47:40,567] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 15:47:40,544] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 15:47:40,571] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 16:31:51,229] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 16:31:51,240] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 16:31:51,236] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 16:31:51,254] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 16:31:51,260] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 16:31:51,273] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 16:31:51,320] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 16:31:51,333] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 17:04:30,112] {{__init__.py:51}} INFO - Using executor SequentialExecutor[2021-09-14 17:04:30,107] {{__init__.py:51}} INFO - Using executor SequentialExecutor[2021-09-14 17:04:30,104] {{__init__.py:51}} INFO - Using executor SequentialExecutor[2021-09-14 17:04:30,116] {{__init__.py:51}} INFO - Using executor SequentialExecutor
 
 
+
+[2021-09-14 17:04:30,123] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 17:04:30,125] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 17:04:30,123] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+
+[2021-09-14 17:04:30,131] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 18:49:29,830] {{__init__.py:51}} INFO - Using executor SequentialExecutor[2021-09-14 18:49:29,864] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 18:49:29,874] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+
+[2021-09-14 18:49:29,884] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 18:49:30,028] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 18:49:30,047] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 18:49:31,083] {{__init__.py:51}} INFO - Using executor SequentialExecutor
+
+[2021-09-14 18:49:31,149] {{dagbag.py:403}} INFO - Filling up the DagBag from /usr/local/airflow/dags
+
+[2021-09-14 17:04:02 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:97)
+
+[2021-09-14 17:04:02 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:99)
+
+[2021-09-14 17:04:02 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:101)
+
+[2021-09-14 17:04:02 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:103)
+
+[2021-09-14 17:04:06 +0000] [117] [INFO] Booting worker with pid: 117
+
+[2021-09-14 17:04:06 +0000] [119] [INFO] Booting worker with pid: 119
+
+[2021-09-14 17:04:06 +0000] [123] [INFO] Booting worker with pid: 123
+
+[2021-09-14 17:04:06 +0000] [121] [INFO] Booting worker with pid: 121
+
+[2021-09-14 18:04:05 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:117)
+
+[2021-09-14 18:04:05 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:119)
+
+[2021-09-14 18:04:05 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:121)
+
+[2021-09-14 18:04:05 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:123)
+
+[2021-09-14 18:04:06 +0000] [119] [INFO] Worker exiting (pid: 119)
+
+[2021-09-14 18:04:06 +0000] [121] [INFO] Worker exiting (pid: 121)
+
+[2021-09-14 18:04:06 +0000] [123] [INFO] Worker exiting (pid: 123)
+
+[2021-09-14 18:04:06 +0000] [117] [INFO] Worker exiting (pid: 117)
+
+[2021-09-14 18:04:07 +0000] [143] [INFO] Booting worker with pid: 143
+
+[2021-09-14 18:04:07 +0000] [141] [INFO] Booting worker with pid: 141
+
+[2021-09-14 18:04:07 +0000] [137] [INFO] Booting worker with pid: 137
+
+[2021-09-14 18:04:07 +0000] [139] [INFO] Booting worker with pid: 139
+
+[2021-09-14 18:49:06 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:137)
+
+[2021-09-14 18:49:06 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:139)
+
+[2021-09-14 18:49:06 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:141)
+
+[2021-09-14 18:49:06 +0000] [48] [CRITICAL] WORKER TIMEOUT (pid:143)
+
+[2021-09-14 18:49:06 +0000] [141] [INFO] Worker exiting (pid: 141)
+
+[2021-09-14 18:49:06 +0000] [139] [INFO] Worker exiting (pid: 139)
+
+[2021-09-14 18:49:06 +0000] [137] [INFO] Worker exiting (pid: 137)
+
+[2021-09-14 18:49:06 +0000] [143] [INFO] Worker exiting (pid: 143)
+
+[2021-09-14 18:49:07 +0000] [149] [INFO] Booting worker with pid: 149
+
+[2021-09-14 18:49:07 +0000] [147] [INFO] Booting worker with pid: 147
+
+[2021-09-14 18:49:07 +0000] [151] [INFO] Booting worker with pid: 151
+
+[2021-09-14 18:49:07 +0000] [145] [INFO] Booting worker with pid: 145
