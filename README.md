@@ -7,7 +7,7 @@ If you use `pip` installer:
 * Yahoo Finance's Python Library: `pip install yfinance`
 * Pandas: `pip install pandas`
 
-This project also utilizes:
+This project also utilizes the following built-in Python libraries:
 * os
 * datetime (date)
 
