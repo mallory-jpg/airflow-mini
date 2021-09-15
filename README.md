@@ -37,5 +37,5 @@ This project also utilizes the following built-in Python libraries:
 1. Ensure `project.py` in `/airflow/dags` directory
 2. Run `docker run --platform linux/amd64 -d -p 8081:8081 -v <location of /airflow/dags folder> puckel/docker-airflow webserver` on command line, which runs the DAGs in the folder. 
 
-*Note*: I've included the `--platform` flag because my Macbook has the M1 processing chip
+*Note*: I've included the `--platform` flag because my Macbook has the M1 processing chip which necessitates a linux/amd64 platform
 *Note*: I've run the entire folder, as this DAG was the only one present at the time of this project
