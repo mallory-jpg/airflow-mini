@@ -1,14 +1,12 @@
-import pandas as pd 
-import yfinance as yf
-import pandas as pd
-import os
 import datetime
-from datetime import datetime, date
+import os
+from datetime import date, datetime, timedelta
 
+import pandas as pd
+import yfinance as yf
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-from datetime import date, datetime, timedelta
 
 default_args = {
     "owner": "airflow",
@@ -25,8 +23,9 @@ dag = DAG(
 )
 
 
-def download_market_data(stock=str):
-    """Download market data given stock from yfinance module.
+def download_market_data(stock:str):
+    """
+    Download market data given stock from yfinance module.
     :param stock (str): stock symbol for company of interest
     ==> DataFrame
     :output: csv
@@ -38,7 +37,9 @@ def download_market_data(stock=str):
     stock_df.to_csv(f"{stock}_data.csv", header=False)
 
 def max_difference():
-    """Get maximum difference of a stock price within a given trading day and on what date it occurs."""
+    """
+    Get maximum difference of a stock price within a given trading day and on what date it occurs.
+    """
     # get current working directory
     cwd = os.getcwd()
     for file in cwd:
@@ -79,7 +80,7 @@ t0 = BashOperator(
 t1 = PythonOperator(
     task_id='get_AAPL_data',
     python_callable=download_market_data,
-    kwargs={'stock': 'AAPL'},
+    op_kwargs={'stock': 'AAPL'},
     dag=dag
 )
 
@@ -87,7 +88,7 @@ t1 = PythonOperator(
 t2 = PythonOperator(
     task_id='get_TSLA_data',
     python_callable=download_market_data,
-    kwargs={'stock': 'TSLA'},
+    op_kwargs={'stock': 'TSLA'},
     dag=dag
 )
 
@@ -108,7 +109,7 @@ t4 = BashOperator(
 
 # run query?
 t5 = PythonOperator(
-    task_id='',
+    task_id='max_diff',
     python_callable=max_difference,
     dag=dag
 )
